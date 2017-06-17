@@ -1,0 +1,21 @@
+<?php
+require 'Slim/Slim.php';
+require 'redbean/rb.php';
+require_once('../../config.php');
+
+\Slim\::registerAutoloader();
+
+R::setup($db['host'],$db['user'],$db['pass']);
+R::freeze(true);
+
+$app = new \Slim\Slim();
+
+$app->get('artices', function() use ($app) {
+	$articles = R::find('articles');
+	$app->response()->header('Content-Type', 'application/json');
+:	echo json_encode(R::exportAll($articles));
+});
+
+$app->run();
+
+?>
