@@ -5,7 +5,10 @@ $user = $db['user'];
 $pass = $db['pass'];
 
 try {
-    $pdo = new PDO($host,$user,$pass);
+    //$pdo = new PDO($host,$user,$pass);
+    $pdo = new PDO('sqlite:db.sqlite3');
+    // SQL実行時にもエラーの代わりに例外を投げるように設定
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //array(PDO:: ATTR_EMULATE_PREPARES => false)); 
     $sth = $pdo->prepare("SELECT * FROM articles");
     $sth->execute();
